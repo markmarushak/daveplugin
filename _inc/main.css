@@ -41,7 +41,7 @@
 }
 
 .nav-tabs > a {
-    max-width: 18%;
+    width: 19%;
 }
 .nav-tabs > a .round-step {
     display: flex;
@@ -102,8 +102,10 @@
 }
 .nav-step-1 p {
     font-size: .75rem;
-    padding: 0  20px 0 55px;
     color: #777;
+    display: flex;
+    width: 145px;
+    margin: 0 auto;
 }
 
 
