@@ -1,0 +1,27 @@
+{
+    "name": "markmarushak/curl-api",
+    "description": "connect to API by curl request",
+    "keywords": ["API", "curl","api","REST API"],
+    "version": "1.2",
+    "type": "library",
+    "require": {
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mark-marushak",
+            "email": "markk.9964@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "markmarushak\\curlapi\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+
+}
