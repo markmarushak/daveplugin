@@ -18,13 +18,16 @@
 /* end color */
 
 #content {
-    box-shadow: 0 0 0 1px #ddd;
+/*    box-shadow: 0 0 0 1px #ddd;
     border-top: 4px solid #cedbe1;
     border-radius: 3px;
     padding: 10px;
+    margin-top: 40px;*/
 }
-
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+.nav-tabs {
+    border-bottom: none;
+}
+#nav-tab.nav-tabs .nav-item.show .nav-link, #nav-tab.nav-tabs .nav-link.active {
     color: unset;
     background-color: unset;
     border-color: transparent;
@@ -34,7 +37,7 @@
     border-color: transparent;
 }
 
-.nav-tabs  .nav-link {
+#nav-tab.nav-tabs .nav-link {
     padding: 0px;
     margin: 0;
     border: 0;
@@ -59,13 +62,17 @@
     width: 50px;
     height: 50px;
     position: relative;
-    color: #fff;
+    color: #333;
     font-size: 1.5em;
+    box-shadow: 0 0 0 1px #979797;
     margin: 10px auto;
     font-weight: bold;
+    z-index: 3;
 }
 .nav-tabs > a.active .round-step span {
     background: #ff625f;
+    color: #fff;
+    box-shadow: 0 0 0 1px #ff625f;
 }
 
 .nav-tabs > a .round-step::after {
@@ -77,11 +84,13 @@
     background: #e6e6e6;
     border-top: 1px solid #979797;
     border-bottom: 1px solid #979797;
-    z-index: -1;
+    z-index: 2;
 }
 
 .nav-tabs > a.active .round-step::after {
     background: #ff625f;
+    border-top: 1px solid #ff625f;
+    border-bottom: 1px solid #ff625f;
 }
 
 .nav-tabs > a:first-child .round-step::after {
@@ -95,16 +104,15 @@
 }
 
 .nav-step-1 h3 {
-    font-size: .9rem;
+    font-size: 1.3rem;
     text-align: center;
     color: #333;
-
 }
 .nav-step-1 p {
-    font-size: .75rem;
+    font-size: 0.95rem;
     color: #777;
     display: flex;
-    width: 145px;
+    width: 100px;
     margin: 0 auto;
 }
 

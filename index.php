@@ -19,8 +19,8 @@ require_once 'autoload.php';
 <div class="container">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#step-1" role="tab"
-               aria-controls="nav-home" aria-selected="true">
+            <a class="nav-item nav-link active" id="nav-step-1" data-toggle="tab" href="#step-1" role="tab"
+               aria-controls="nav-step-1" aria-selected="true">
             <span class="round-step">
                 <span>1</span>
             </span>
@@ -29,8 +29,8 @@ require_once 'autoload.php';
                 <p>Enter your first time username password details</p>
             </span>
             </a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-               aria-controls="nav-profile" aria-selected="false">
+            <a class="nav-item nav-link" id="nav-step-2" data-toggle="tab" href="#step-2" role="tab"
+               aria-controls="nav-step-2" aria-selected="false">
             <span class="round-step">
                 <span>2</span>
             </span>
@@ -87,9 +87,11 @@ require_once 'autoload.php';
         <div class="tab-content" id="nav-tabContent">
 
             <?php require_once('step-1.php'); ?>
+            <?php require_once('step-2.php'); ?>
+            <?php require_once('step-3.php'); ?>
+            <?php require_once('step-4.php'); ?>
+            <?php require_once('step-5.php'); ?>
 
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
         </div>
 
 </div>
