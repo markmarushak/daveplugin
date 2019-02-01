@@ -120,3 +120,20 @@
 .step-1 .form-inline select {
     width: 100%;
 }
+
+.butt {
+    display: flex;
+    justify-content: center;
+}
+
+.butt > * {
+    margin: 10px auto;
+}
+
+.butt a {
+    margin: 10px auto;
+    padding: 12px 32px;
+    font-size: 1.3rem;
+    background: #8dca0a;
+    border: none;
+}
