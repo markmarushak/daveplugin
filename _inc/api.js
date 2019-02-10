@@ -70,7 +70,8 @@ jQuery(document).ready(function ($) {
 
 
 
-    $('#form_step_1').submit(function (event) {
+    // $('#grade').change(function (event) {
+    $('#school-district').change(function (event) {
         event.preventDefault();
         var main = $('#school-district option:selected');
         var data = {
@@ -80,7 +81,6 @@ jQuery(document).ready(function ($) {
             lowestGradeLevel: main.attr('data-lowest'),
             highestGradeLevel: main.attr('data-highest')
         };
-        $('#step-'+$(this).attr('data-next-tab')).addClass('active show');
         $.ajax({
             method: 'GET',
             url: '/ajax.php',
@@ -90,10 +90,10 @@ jQuery(document).ready(function ($) {
             console.log(data);
             for(var i=0; i<data.length; i++)
             {
-                $('#content_step_2').append('' +
+                $('#plan-list').append('' +
                     '<div class="col-sm-12" data-webplan-id="'+data[i].plan_type_id+'">'+
                     '<header><b>'+data[i].web_display_header+'</b></header>'+
-                    data[i].web_display_collateral+
+                    '<div class="main-info-plan">'+data[i].web_display_collateral+'</div>'+
                     '<div class="butt">' +
                     '' +
                     '</div>'+
@@ -101,8 +101,6 @@ jQuery(document).ready(function ($) {
                 getBuyButton(data[i].plan_type_id);
             }
         });
-        $(this).parent().removeClass('active show');
-        $('#step-'+$(this).attr('data-next-tab')).addClass('active show');
 
 
     });
@@ -125,41 +123,85 @@ jQuery(document).ready(function ($) {
             dataType: 'JSON'
         }).done(function (data) {
             console.log(data);
+
+            var p_h = $('*[data-webplan-id="' +data[0].plan_type_id+'"] .main-info-plan p:nth-child(1)').html();
+            console.log(p_h.search(/(School Yea)/i));
+            if(p_h.search(/(School Yea)/i) > 0){
+                $('*[data-webplan-id="'+data[0].plan_type_id+'"] header').append('<p>'+p_h+'</p>');
+                $('*[data-webplan-id="' +data[0].plan_type_id+'"] .main-info-plan p:nth-child(1)').html('');
+            }
+
             if(data[0].low_option_premium != null){
-                console.log('low_option_premium');
+
+                $('*[data-webplan-id="' +data[0].plan_type_id+'"] .main-info-plan').prepend('<a href="#" data-toggle="modal" data-target="#modal-benefit" low-plan-id="' +data[0].low_plan_id+'" mid-plan-id="' +data[0].mid_plan_id+'" high-plan-id="' +data[0].high_plan_id+'" class="info-benefit array" onclick="script:getBenefits($(this));">view the General Benefits Disclosure </a>');
+
                 $('*[data-webplan-id="'+data[0].plan_type_id+'"] .butt').append('' +
                     '<div class="but-block">'+
                         '<b>$'+data[0].low_option_premium+' Base Option</b>'+
                         '<p>Best price, lowest covarege</p>'+
-                        '<a href="#" class="btn btn-success" data-price="'+data[0].low_option_premium+'">Add to Cart</a>' +
+                        '<a href="#" class="btn btn-success btn-radio" onclick="script:addCart($(this));" data-toggle="modal" data-price="'+data[0].low_option_premium+'">Add to Cart</a>' +
                     '</div>'+
                     '<div class="but-block">'+
                         '<b>$'+data[0].mid_option_premium+' Mid Option</b>'+
                         '<p>Great price - Great covrage</p>'+
-                        '<a href="#" class="btn btn-success" data-price="'+data[0].mid_option_premium+'">Add to Cart</a>' +
+                        '<a href="#" class="btn btn-success btn-radio" onclick="script:addCart($(this));" data-toggle="modal" data-price="'+data[0].mid_option_premium+'">Add to Cart</a>' +
                     '</div>'+
                     '<div class="but-block">'+
                         '<b>$'+data[0].high_option_premium+' High Option</b>'+
                         '<p>Best Covarage - Higher cost</p>'+
-                        '<a href="#" class="btn btn-success" data-price="'+data[0].high_option_premium+'">Add to Cart</a>' +
+                        '<a href="#" class="btn btn-success btn-radio" onclick="script:addCart($(this));" data-toggle="modal" data-price="'+data[0].high_option_premium+'">Add to Cart</a>' +
                     '</div>');
             }else if(data[0].initial_option_premium != null){
-                console.log('initial_option_premium');
+
+                $('*[data-webplan-id="' +data[0].plan_type_id+'"] .main-info-plan').prepend('<a href="#" data-toggle="modal" data-target="#modal-benefit" data-plan-id="' +data[0].initial_plan_id+'" class="info-benefit" onclick="script:getBenefits($(this));">view the General Benefits Disclosure </a>');
+
                 $('*[data-webplan-id="'+data[0].plan_type_id+'"] .butt').append('' +
-                    '<a href="#" class="btn btn-success">'+data[0].initial_option_premium+'</a>',
-                    '<a href="#" class="btn btn-success">'+data[0].bimonthly_option_premium+'</a>'
+                    '<div class="but-block">'+
+                        '<b>$'+data[0].initial_option_premium+' Initial Payment</b>'+
+                        '<p>* Subsequent Payments of $'+data[0].bimonthly_option_premium+'every two months</p>'+
+                        '<a href="#" class="btn btn-success" onclick="script:addCart($(this));" data-toggle="modal" data-price="'+data[0].initial_option_premium+'">Add to Cart</a>' +
+                    '</div>'
                 );
             }else if(data[0].standard_premium != null){
-                console.log('standard_premium');
+
+                $('*[data-webplan-id="' +data[0].plan_type_id+'"] .main-info-plan').prepend('<a href="#" data-toggle="modal" data-target="#modal-benefit" data-plan-id="' +data[0].standard_plan_id+'" class="info-benefit" onclick="script:getBenefits($(this));">view the General Benefits Disclosure </a>');
+
+
                 $('*[data-webplan-id="'+data[0].plan_type_id+'"] .butt').append('' +
-                    '<a href="#" class="btn btn-success">'+data[0].standard_premium+'</a>');
+                    '<div class="but-block">'+
+                        '<b>$'+data[0].standard_premium+' Pharmacy Card</b>'+
+                        '<p></p>'+
+                        '<a href="#" class="btn btn-success" onclick="script:addCart($(this));" data-toggle="modal" data-price="'+data[0].standard_premium+'">Add to Cart</a>' +
+                    '</div>');
+            }else if(data[0].dental_other_premium != null){
+                
+                $('*[data-webplan-id="' +data[0].plan_type_id+'"] .main-info-plan').prepend('<a href="#" data-toggle="modal" data-target="#modal-benefit" data-plan-id="' +data[0].dental_with_no_other_plan_id+'" class="info-benefit" onclick="script:getBenefits($(this));">view the General Benefits Disclosure </a>');
+
+                $('*[data-webplan-id="'+data[0].plan_type_id+'"] .butt').append('' +
+                    '<div class="but-block">'+
+                        '<b>$'+data[0].dental_no_other_premium+' Purchased Alone</b>'+
+                        '<p>* or $'+data[0].dental_other_premium+' When purchased with another plan</p>'+
+                        '<a href="#" class="btn btn-success" onclick="script:addCart($(this));" data-toggle="modal" data-price="'+data[0].dental_no_other_premium+'">Add to Cart</a>' +
+                    '</div>');
             }
-            var p_h = $('*[data-webplan-id="' +data[0].plan_type_id+'"] p:nth-child(2)').html();
-            $('*[data-webplan-id="'+data[0].plan_type_id+'"] header').append('<p>'+p_h+'</p>');
-            p_h.html(' ');
+            
+
 
         });
     }
+
+    $('.form-submit').submit(function(event){
+        event.preventDefault();
+        var next = $(this).attr('data-next-tab');
+        var tab = $(this).attr('data-tab');
+
+        $(this).parent().removeClass('show active').addClass('complete');
+        $('#nav-step-'+tab).removeClass('active')
+        $('#step-'+next+',nav-step-'+next).addClass('show active');
+
+    })
+
+    
 
 });
 

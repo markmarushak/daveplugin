@@ -24,9 +24,11 @@
     padding: 10px;
     margin-top: 40px;*/
 }
+
 .nav-tabs {
     border-bottom: none;
 }
+
 #nav-tab.nav-tabs .nav-item.show .nav-link, #nav-tab.nav-tabs .nav-link.active {
     color: unset;
     background-color: unset;
@@ -46,6 +48,7 @@
 .nav-tabs > a {
     width: 19%;
 }
+
 .nav-tabs > a .round-step {
     display: flex;
     align-items: center;
@@ -53,6 +56,7 @@
     width: 100%;
     position: relative;
 }
+
 .nav-tabs > a .round-step span{
     display: flex;
     align-items: center;
@@ -69,6 +73,7 @@
     font-weight: bold;
     z-index: 3;
 }
+
 .nav-tabs > a.active .round-step span {
     background: #ff625f;
     color: #fff;
@@ -108,17 +113,47 @@
     text-align: center;
     color: #333;
 }
+
 .nav-step-1 p {
     font-size: 0.95rem;
     color: #777;
     display: flex;
-    width: 100px;
-    margin: 0 auto;
+    text-align: center;
 }
-
 
 .step-1 .form-inline select {
     width: 100%;
+}
+
+
+#plan-list header {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 0;
+    box-shadow: 0 0 10px -1px #eee;
+    margin-bottom: -2px;
+}
+
+#plan-list header > b {
+    padding-left: 20px;
+    border-left: 4px solid #00aaf0;
+}
+
+#plan-list header > p {
+    position: absolute;
+    right: 3em;
+    margin: 0;
+}
+
+#plan-list header > p font {
+    color: #00aaf0;
+    font-style: normal;
+    font-weight: bold;
+}
+
+#plan-list .main-info-plan {
+    box-shadow: 0 0 10px -1px #eee;
+    padding: 20px;
 }
 
 .butt {
@@ -137,3 +172,54 @@
     background: #8dca0a;
     border: none;
 }
+
+.butt .btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: 640px;
+        margin: 1.75rem auto;
+    }
+}
+
+.wrap-alert {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    position: fixed;
+    top: 0;
+    z-index: 123;
+    justify-content: center;
+    width: 100%;
+    /* max-height: 30vh; */
+}
+
+.block-alert {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    position: relative;
+    transition: all .5s;
+}
+
+.block-alert > * {
+    opacity: 0;
+    transition: all .5s;
+    top: 0;
+}
+
+.block-alert > *:nth-child(1){opacity: 1;/* top: 20px; */}
+.block-alert > *:nth-child(2){opacity: .75}
+.block-alert > *:nth-child(3){opacity: .5}
+.block-alert > *:nth-child(4){opacity: .25}

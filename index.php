@@ -108,5 +108,158 @@ require_once 'autoload.php';
 
 <script src="_inc/api.js"></script>
 
+<script>
+
+    var cart = {
+        money: 0
+    };
+    
+    function getBenefits(el){
+
+        var data = {
+            type:'benefits',
+            id: 0
+        }
+
+        if(el.hasClass('array')){
+            data.id = {
+                low: el.attr('low-plan-id'),
+                mid: el.attr('mid-plan-id'),
+                high: el.attr('high-plan-id'),
+            }
+        }else{
+            data.id = el.attr('data-plan-id');
+        }
+
+        $.ajax({
+            method:'GET',
+            url: './ajax.php',
+            data: data,
+            dataType: 'json'
+        }).done(function(data){
+            console.log(data);
+            var cont = $('#content-benefit');
+            cont.html('');
+            console.log(data.length);
+            if(data.length < 20){
+                cont.append(`<table class="table"><thead>
+                <tr>
+                <th>Description</th>
+                <th>Low</th>
+                <th>Mid</th>
+                <th>High</th>
+                </tr></thead>`);
+                for (var c = 0; c < data[0].length; c++) {
+                    cont.find('table').append(`
+                        <tr>
+                        <td>`+data[0][c].description+`</td>
+                        <td>`+data[0][c].maximums_description+`</td>
+                        <td>`+data[1][c].maximums_description+`</td>
+                        <td>`+data[2][c].maximums_description+`</td>
+                        </tr>`);
+                }
+            }else{
+                cont.append(`<table class="table">
+                <tr>
+                <th>Description</th>
+                <th>benefits</th>
+                </tr>`);
+                 for (var c = 0; c < data.length; c++) {
+                    cont.find('table').append(`
+                        <tr>
+                        <td>`+data[c].description+`</td>
+                        <td>`+data[c].maximums_description+`</td>`);
+                }
+            }
+
+            cont.append('</table>');
+        });
+    }
+
+    
+    function r_id(max){
+        return Math.floor(Math.random() * Math.floor(max))
+    }
+
+    function addCart(el){
+        
+        var data = {
+            price: el.attr('data-price'),
+            name: el.prev().prev().text(),
+            temp_id: r_id(1000)
+        }
+
+        if(el.hasClass('btn-radio')){
+            var radio_b = el.parent().parent().find('a.btn-danger');
+            var radio_parent = el.parent().parent().find('a.btn-danger').attr('data-price');
+
+            
+            
+
+            if(el.hasClass('btn-danger')){
+                
+                el.removeClass('btn-danger').text('Add Cart');
+                cart.money = parseInt(cart.money) - parseInt(data.price);
+                showAlert(data.name,data.temp_id, 'remove');
+
+            }else {
+                if (radio_b.length == 1) {
+                    cart.money = parseInt(cart.money) - parseInt(radio_parent);
+                    radio_b.removeClass('btn-danger').text('Add Cart');
+                }
+                el.addClass('btn-danger').text('Remove');
+                cart.money = parseInt(cart.money) + parseInt(data.price);
+                showAlert(data.name,data.temp_id);
+
+            }
+
+        }else{
+             if(el.hasClass('btn-danger')){
+                el.removeClass('btn-danger').text('Add Cart');
+                cart.money = parseInt(cart.money) - parseInt(data.price);
+                showAlert(data.name,data.temp_id, 'remove');
+
+            }else {
+                el.addClass('btn-danger').text('Remove');
+                cart.money = parseInt(cart.money) + parseInt(data.price);
+                showAlert(data.name,data.temp_id);
+            }
+        }
+
+       
+
+        console.log(cart.money);
+    }
+
+    function showAlert(name, id, type='success') {
+        if(type=='success'){
+             var info = `<div id="al_`+id+`" class="alert alert-success" role="alert">`+name+` <b>all pay: `+cart.money+`</b></div>`;
+         }else{
+            var info = `<div id="al_`+id+`" class="alert alert-warning " role="alert">remove `+name+` from cart! <b>all pay: `+cart.money+`</b></div>`;
+         }
+       
+
+        if($('body').find('.block-alert').length > 0){
+            $('.block-alert').prepend(info);
+        }else{
+            $('body').prepend(`<div class="wrap-alert"><div class="block-alert"></div></div>`);
+            $('.block-alert').prepend(info);
+        }
+
+        setTimeout(function(){
+            hideAlert(id);
+        },1000);
+    }
+
+    function hideAlert(id){
+        $('#al_'+id).remove();
+    }
+
+   
+
+    
+
+</script>
+
 </body>
 </html>

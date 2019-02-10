@@ -27,3 +27,33 @@ if($_GET['type'] == 'planprem'){
     $district = file_get_contents($url);
     echo $district;
 }
+
+if($_GET['type'] == 'benefits'){
+
+    if(is_array($_GET['id'])){
+        $data = '[';
+        $a = 1;
+        foreach ($_GET['id'] as $id => $val) {
+            # code...
+
+            $url = 'http://mymst.myers-stevens.com/api/planbenefits/'.$val;
+
+            $district = file_get_contents($url);
+            if($a != count($_GET['id'])){
+                $data .= $district.',';
+            }else{
+                $data .= $district;
+            }
+            $a++;
+        }
+        echo $data.']';
+
+    }else {
+        $url = 'http://mymst.myers-stevens.com/api/planbenefits/'.$_GET['id'];
+
+        $district = file_get_contents($url);
+        echo $district;
+
+    }
+}
+    
